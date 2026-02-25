@@ -1,0 +1,182 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+nav {
+  width: 100%;
+}
+
+/* ===================== */
+/* TOP NAVBAR */
+/* ===================== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+  z-index: 10;
+}
+
+/* logo / links */
+.navbar a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+}
+
+/* ===================== */
+/* SIDEBAR */
+/* ===================== */
+
+.nav {
+  position: fixed;
+  top: 60px;
+  right: -100%;                 /* hidden by default */
+  width: 260px;
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  background-color: #fbf2f2;
+  padding: 30px 20px;
+  transition: right 0.4s ease;
+}
+
+/* sidebar links */
+.nav a {
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+}
+
+/* show sidebar */
+#menu-toggle:checked ~ .nav {
+  right: 0;
+}
+
+/* ===================== */
+/* HAMBURGER */
+/* ===================== */
+
+#menu-toggle {
+  display: none;
+}
+
+.menu {
+  margin-left: auto;            /* 🔥 RESPONSIVE MAGIC */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menu span {
+  width: 24px;
+  height: 2px;
+  background: black;
+  transition: 0.3s;
+}
+
+.search{
+   position: absolute;
+   left: 50%;
+   transform: translateX(-50%); 
+    padding: 6px 10px;
+    border: 1px solid #4cd2ff;
+    border-radius: 4px;
+    width: 350px;
+    
+}
+.action {
+    position: absolute;
+    right: 70px;
+  
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* cart */
+.cart {
+  position: relative;
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+}
+
+/* cart badge */
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* signup button */
+.signup {
+  text-decoration: none;
+  padding: 6px 12px;
+  color: white;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+
+/* hamburger → cross */
+#menu-toggle:checked + .navbar .menu span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+#menu-toggle:checked + .navbar .menu span:nth-child(2) {
+  opacity: 0;
+}
+
+#menu-toggle:checked + .navbar .menu span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+
+/* ===================== */
+/* RESPONSIVE */
+/* ===================== */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .nav {
+    width: 70%;
+  }
+  .search{
+    display: none;
+  }
+  .cart{
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .nav {
+    width: 85%;
+  }
+   .search{
+    display: none;
+  }
+  .cart{
+    display: none;
+  }
+}
