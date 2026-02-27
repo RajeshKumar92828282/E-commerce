@@ -42,7 +42,8 @@ const filterItems = (category) => {
       />
       <Allproduct items={items} />
       <Routes>
-        <Route path="/Fashion" element={<Mens />} />
+        <Route path="/" element={<Category1/>}/>
+        <Route path="/fashion" element={<Mens />} />
       </Routes>
     </BrowserRouter>
     

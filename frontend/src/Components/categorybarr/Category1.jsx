@@ -15,7 +15,7 @@ export default function Category1(){
     return (
         <div className="category-container">
             <div className="category-section">
-                <div className="category-card" onClick={()=>navigate("/Fashion")}>
+                <div className="category-card" onClick={()=>navigate("/fashion")}>
                     <div className="icon-box">
                         <img src={fashion} alt="fashion" />
                     </div>
