@@ -32,18 +32,24 @@ const filterItems = (category) => {
     <BrowserRouter>
 
      <Navbar />
-     <Category1 />
+     
 
-      <Category 
+     
+      
+      <Routes>
+
+        <Route path="/" element={<>
+        <Category1 />
+         <Category 
       filterItems={filterItems}
       setitems={setItems}
       allProducts={Product}
+     
       
       />
-      <Allproduct items={items} />
-      <Routes>
-        <Route path="/" element={<Category1/>}/>
-        <Route path="/fashion" element={<Mens />} />
+       <Allproduct items={items} />
+        </>}/>
+        <Route path="/mens" element={<Mens />} />
       </Routes>
     </BrowserRouter>
     
