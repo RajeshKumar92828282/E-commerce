@@ -10,7 +10,7 @@ export default function Category({filterItems}) {
   return (
     
     <div className="container">
-    <div className="btn-group">
+    <div className="btn-group1">
       <button onClick={()=>filterItems("all")}>All</button>
 
       <button onClick={()=>filterItems("men's clothing")}>
