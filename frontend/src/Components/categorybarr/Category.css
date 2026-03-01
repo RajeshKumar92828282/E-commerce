@@ -1,19 +1,39 @@
-.btn-group {
+/* Container */
+.container {
+  width: 100%;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+/* Horizontal Layout */
+.btn-group1 {
   display: flex;
   gap: 10px;
-  margin-top: 200px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
 }
 
-.btn-group button {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: none;
-  background: #ddd;
+/* Hide Scrollbar */
+.btn-group1::-webkit-scrollbar {
+  display: none;
+}
+
+/* IMPORTANT FIX */
+.btn-group1 button {
+  flex: 0 0 auto;      /* stop stretching */
+  width: auto;         /* natural width */
+  padding: 6px 14px;
+  font-size: 12px;
+  border-radius: 16px;
+  border: 1px solid #ddd;
+  background: #3b4862;
   cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s ease;
 }
 
-.btn-group button:hover {
-  background: #0096ff;
-  color: #fff;
+/* Hover */
+.btn-group1 button:hover {
+  background: #007bff;
+  color: white;
 }
-
