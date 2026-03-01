@@ -6,6 +6,8 @@ import Allproduct from './Components/allproduct/Allproduct'
 import Product from './assets/allproductimg/Product'
 import Mens from './pages/categoryitem/Mens'
 import Category1 from './Components/categorybarr/Category1'
+import Login from '../src/pages/auth/Login'
+import Signup from './pages/auth/Signup'
 
 
 const App = () => {
@@ -43,13 +45,14 @@ const filterItems = (category) => {
          <Category 
       filterItems={filterItems}
       setitems={setItems}
-      allProducts={Product}
-     
+      allProducts={Product}  
       
       />
        <Allproduct items={items} />
         </>}/>
+        <Route path='/Login' element={<Login />} />
         <Route path="/mens" element={<Mens />} />
+        <Route path='/Signup' element={< Signup />} />
       </Routes>
     </BrowserRouter>
     
