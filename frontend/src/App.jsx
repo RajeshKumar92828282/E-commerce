@@ -8,6 +8,7 @@ import Mens from './pages/categoryitem/Mens'
 import Category1 from './Components/categorybarr/Category1'
 import Login from '../src/pages/auth/Login'
 import Signup from './pages/auth/Signup'
+import Profile from './pages/profile'
 
 
 const App = () => {
@@ -53,6 +54,7 @@ const filterItems = (category) => {
         <Route path='/Login' element={<Login />} />
         <Route path="/mens" element={<Mens />} />
         <Route path='/Signup' element={< Signup />} />
+       <Route path='/profile' element={<Profile />} />
       </Routes>
     </BrowserRouter>
     
