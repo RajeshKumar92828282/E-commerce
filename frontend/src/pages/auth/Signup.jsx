@@ -2,29 +2,48 @@ import React, { useState,} from "react"
 import { Link } from "react-router-dom";
 import '../../CSS/Signup.css'
 
-
 const Signup = () => {
     const [form,setForm]=useState({
         name:"",
         email:"",
         password:"",
-        confirmpassword:""
+        confirmPassword:""
     });
     const [error,setEror] =useState("");
     const handleChange =(e)=>{
       setForm({...form,[e.target.name]: e.target.value})
     };
-    const handleSubmit =(e)=>{
+    const handleSubmit = async(e)=>{
        e.preventDefault();
        if(!form.email.includes("@")){
         return setEror("invalid email");
-
        }
-       if(form.password!==form.confirmpassword){
+       if(form.password!==form.confirmPassword){
         return setEror("password do not match");
        }
        setEror("");
-       alert("sing up successful")
+       
+       try {
+         const res = await fetch("http://localhost:5000/api/auth/signup",{
+           method:"POST",
+           headers:{
+             "Content-Type":"application/json",
+           },
+           body:JSON.stringify({
+             name:form.name,
+             email:form.email,
+             password:form.password,
+           }),
+         });
+         const data = await res.json();
+         if(res.ok){
+           alert("signup successful"); 
+         }else{
+           setEror(data.message || "Signup failed");
+         }
+       } catch {
+         setEror("An error occurred. Please try again.");
+       }
     };
   return (
     <div className="signup-wrapper">
