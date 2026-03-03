@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   gap: 40px;
-  margin-top: 50px;
+  margin-top: 0px;
   padding: 25px;
    overflow-x: auto;
   flex-wrap: nowrap;
