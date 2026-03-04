@@ -19,12 +19,11 @@
 .icon-box {
   width: 90px;
   height: 90px;
-  
+  background: #f1f3f6;
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 .icon-box img {
@@ -67,6 +66,7 @@
   .icon-box {
     width: 70px;
     height: 70px;
+    background: #f1f3f6;
   }
 
   .icon-box img {
