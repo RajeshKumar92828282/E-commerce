@@ -145,6 +145,10 @@
   background: #fb641b;
 }
 
+
+.cart-btn.added{
+background:#4caf50;
+}
 /* Responsive */
 @media (max-width: 768px) {
   .product-grid {
