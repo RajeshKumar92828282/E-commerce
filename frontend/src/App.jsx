@@ -15,6 +15,7 @@ import Cart from '../src/pages/cart/Cart'
 
 const App = () => {
   const [items, setItems] = useState(Product)
+  const [count,setcount]=useState(0);
 
   
 
@@ -36,7 +37,7 @@ const filterItems = (category) => {
   return (
     <BrowserRouter>
 
-     <Navbar />
+     <Navbar count={count} />
      
 
      
@@ -49,14 +50,14 @@ const filterItems = (category) => {
       <Category1 />
 
       
-      <Home />
+      <Home setcount={setcount} />
 <Category
   filterItems={filterItems}
   setitems={setItems}
   allProducts={Product}
 />
     
-      <Allproduct items={items} />
+      <Allproduct items={items} setcount={setcount} />
     </>
   }
 />
