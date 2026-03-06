@@ -20,22 +20,6 @@ router.post('/signup',async (req,res)=>{
     }
 });
 
-router.post('/register',async (req,res)=>{
-    try {
-        const hashed=await bcyrt.hash(req.body.password,10);
-
-        const user =new User({
-            name:req.body.name,
-            email:req.body.email,
-            password:hashed,
-        });
-        await user.save();
-        res.json({message:"User created"});
-    } catch(err) {
-        res.status(500).json({message:err.message});
-    }
-});
-
 router.post('/login',async(req,res)=>{
     try {
         const user=await User.findOne({email:req.body.email});
