@@ -11,11 +11,13 @@ import Profile from './pages/profile'
 import Home from './pages/Home'
 import Category from './Components/categorybarr/category'
 import Cart from '../src/pages/cart/Cart'
+import Wishlist from './pages/wish/Wishlist'
 
 
 const App = () => {
   const [items, setItems] = useState(Product)
   const [count,setcount]=useState(0);
+  const [wishlist, setWishlist] = useState([]);
 
   
 
@@ -32,6 +34,15 @@ const filterItems = (category) => {
     (items)=> items.category === category
   );
   setItems(updatedItems);
+};
+
+const addToWishlist = (item) => {
+  const existsInWishlist = wishlist.some((w) => w.id === item.id);
+  if (existsInWishlist) {
+    setWishlist(wishlist.filter((w) => w.id !== item.id));
+  } else {
+    setWishlist([...wishlist, item]);
+  }
 };
 
   return (
@@ -57,7 +68,7 @@ const filterItems = (category) => {
   allProducts={Product}
 />
     
-      <Allproduct items={items} setcount={setcount} />
+      <Allproduct items={items} setcount={setcount} addToWishlist={addToWishlist} wishlist={wishlist} />
     </>
   }
 />
@@ -67,7 +78,7 @@ const filterItems = (category) => {
         <Route path='/Signup' element={< Signup />} />
        <Route path='/profile' element={<Profile />} />
        <Route path='/cart' element={<Cart />} />
-       
+       <Route path='/Wishlist' element={<Wishlist wishlist={wishlist} />}/>
       </Routes>
     </BrowserRouter>
     
