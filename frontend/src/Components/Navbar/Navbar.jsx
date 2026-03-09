@@ -2,8 +2,10 @@ import React from 'react'
 import { Link ,useNavigate} from 'react-router-dom'
 import { useState } from 'react';
 import './Navbar.css'
-const Navbar = () => {
+
+const Navbar = ({count}) => {
 const navigate=useNavigate();
+
 const name=localStorage.getItem("name");
 const [user,setUser]=useState(name);
 
@@ -16,6 +18,19 @@ const handleLogout=()=>{
   setUser(null);
   navigate("/login");
 }
+// const getcount=async ()=>{
+//   try{
+//     const res= await fetch("http://localhost:5000/api/cart");
+//     const data=await res.json();
+//     setcount(data.length);
+//   }catch (err){
+//     console.log(err);
+//   }
+  
+// };
+// useEffect(()=>{
+//   getcount();
+// },[]);
 
   return (
     <nav>
@@ -32,7 +47,7 @@ const handleLogout=()=>{
         <div className="action">
           <Link to='/cart' className="cart">
             Cart🛒
-          <span className="badge">0</span>
+          <span className="badge">{count}</span>
           </Link>
 
          {user ? (
@@ -63,7 +78,7 @@ const handleLogout=()=>{
          <Link style={{textDecoration: 'none', color: 'black'}}>Home</Link>
           <Link style={{textDecoration: 'none', color: 'black'}}>Product</Link>
             <Link to='/cart' style={{textDecoration: 'none', color: 'black'}}>Cart</Link>
-            <Link style={{textDecoration: 'none', color: 'black'}}>Your wishlist</Link>
+            <Link to='/Wishlist' style={{textDecoration: 'none', color: 'black'}}>Your wishlist</Link>
             <Link style={{textDecoration: 'none', color: 'black'}}>Order</Link>
             <Link to='/profile' style={{textDecoration: 'none', color: 'black'}}>Your profile</Link>
              <Link to='/Login' style={{textDecoration: 'none', color: 'black'}}>Sign up</Link>

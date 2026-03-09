@@ -24,6 +24,9 @@ mongoose
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/user"));
 app.use("/api/cart", require("./routes/cartroutes"));
+app.use("/api/wishlist", require("./routes/wishlist"));
+
+
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
@@ -39,4 +42,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✓ Server is running on port ${PORT}`);
+});
+app.get("/", (req, res) => {
+  res.send("API Working");
 });

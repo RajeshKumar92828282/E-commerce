@@ -7,7 +7,7 @@
    overflow-x: auto;
   flex-wrap: nowrap;
   scrollbar-width: none;
-  background: #fff;
+ 
 }
 
 .category-card {
@@ -19,7 +19,7 @@
 .icon-box {
   width: 90px;
   height: 90px;
-  background: #f1f3f6;
+ 
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -66,7 +66,7 @@
   .icon-box {
     width: 70px;
     height: 70px;
-    background: #f1f3f6;
+    
   }
 
   .icon-box img {

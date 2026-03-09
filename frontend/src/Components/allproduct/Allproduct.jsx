@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import "./allproduct.css";
 import { FaHeart } from "react-icons/fa";
 
-export default function Allproduct({ items }) {
+export default function Allproduct({ items, setcount }) {
   const [add, setadd] = useState({});
   const [error, setError] = useState(null);
+  const [wishlist,setWishlist]=useState([]);
 
   const addtocard = async (item) => {
     try {
@@ -27,8 +28,9 @@ export default function Allproduct({ items }) {
           image: item.image,
           quantity: 1,
         }),
+        
       });
-
+  setcount(prev => prev + 1);
       if (!res.ok) {
         throw new Error(`Failed to add item: ${res.status}`);
       }
@@ -44,7 +46,61 @@ export default function Allproduct({ items }) {
       console.error("Add to cart error:", err);
       setError(err.message || "Failed to add item to cart");
     }
+   
   };
+// wishlist
+const addToWishlist = async (item) => {
+  try {
+    setError(null);
+
+    const res = await fetch("http://localhost:5000/api/wishlist/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: "6645abc1234567890abcdef0", // replace with logged-in user’s ID
+        productId: item.id,                // or ObjectId if you’re using Mongo refs
+        title: item.title,
+        image: item.image,
+        price: item.price,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to add to wishlist: ${res.status}`);
+    }
+
+    const data = await res.json();
+    console.log("Wishlist response:", data);
+
+    // Update local wishlist state
+    setadd((prev) => ({ ...prev, [item.id]: true }));
+
+    setTimeout(() => {
+      setadd((prev) => ({ ...prev, [item.id]: false }));
+    }, 2000);
+  } catch (err) {
+    console.error("Add to wishlist error:", err);
+    setError(err.message || "Failed to add item to wishlist");
+  }
+};
+
+// Load wishlist from backend
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/wishlist/6645abc1234567890abcdef0"); 
+        if (!res.ok) throw new Error("Failed to fetch wishlist");
+        const data = await res.json();
+        setWishlist(data);
+      } catch (err) {
+        console.error("Wishlist fetch error:", err);
+        setError(err.message);
+      }
+    };
+    fetchWishlist();
+  }, []);
 
   return (
     <div className="product-container">
@@ -62,10 +118,17 @@ export default function Allproduct({ items }) {
 
           return (
             <div key={item.id} className="product-card">
-              {/* Wishlist Icon */}
-              <div className="wishlist">
-                <FaHeart />
-              </div>
+             {/* Wishlist Icon */}
+              <div 
+      className="wishlist"
+  onClick={() => addToWishlist(item)}
+  style={{
+    cursor: "pointer",
+    color: wishlist.some(w => w.id === item.id) ? "red" : "gray"
+  }}
+>
+  <FaHeart />
+</div>
 
               {/* Discount Badge */}
               {discount > 0 && (

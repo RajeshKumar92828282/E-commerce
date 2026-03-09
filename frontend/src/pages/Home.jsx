@@ -22,7 +22,7 @@ const banners = [
  
  
 ];
-const Home = () => {
+const Home = ({ setcount }) => {
    const sliderRef = useRef();
 
  const [isDown, setIsDown] = useState(false);
@@ -135,7 +135,7 @@ const handleMouseDown = (e) => {
       {/* TRENDING */}
       <div className="section">
         <h2>🔥 Trending Now</h2>
-        <Allproduct items={Product.slice(0, 6)} />
+        <Allproduct items={Product.slice(0, 6)} setcount={setcount} />
       </div>
 
       {/* OFFER BANNER */}
@@ -147,7 +147,7 @@ const handleMouseDown = (e) => {
       {/* ALL PRODUCTS */}
       <div className="section">
         <h2>🛍 Explore Products</h2>
-        <Allproduct items={Product} />
+        <Allproduct items={Product} setcount={setcount} />
       </div>
 
     </div>
