@@ -7,8 +7,7 @@ const wishlistSchema = new mongoose.Schema({
     required: true
   },
   productId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Product",
+    type: mongoose.Schema.Types.Mixed, // Allows both ObjectId and String
     required: true
   },
   title: {
@@ -22,6 +21,6 @@ const wishlistSchema = new mongoose.Schema({
     type: Number,
     required: true
   }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model("Wishlist", wishlistSchema);
