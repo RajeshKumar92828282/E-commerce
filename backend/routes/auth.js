@@ -28,10 +28,11 @@ router.post('/login',async(req,res)=>{
         const valid=await bcyrt.compare(req.body.password,user.password);
         if(!valid) return res.status(400).json({message:"Wrong password"});
 
-        const token =jwt.sign({id:user._id},"secretkey");
+        const token =jwt.sign({id:user._id}, process.env.JWT_SECRET || "secretkey");
         res.json({
             token,
             user:{
+                _id:user._id,
                 name:user.name,
                 email:user.email,
                 phone: user.phone || "",
