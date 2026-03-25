@@ -78,7 +78,7 @@ const addToWishlist = (item) => {
         <Route path='/Signup' element={< Signup />} />
        <Route path='/profile' element={<Profile />} />
        <Route path='/cart' element={<Cart />} />
-       <Route path='/Wishlist' element={<Wishlist wishlist={wishlist} />}/>
+       <Route path='/Wishlist' element={<Wishlist />}/>
       </Routes>
     </BrowserRouter>
     
