@@ -21,6 +21,7 @@ const Login = () => {
     const data = await res.json();
     if(res.ok){
       localStorage.setItem("token",data.token);
+      localStorage.setItem("userId",data.user._id);
       localStorage.setItem("name",data.user.name);
       localStorage.setItem("email",data.user.email);
       if (data.user.phone) localStorage.setItem("phone", data.user.phone);
