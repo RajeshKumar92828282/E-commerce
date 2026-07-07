@@ -31,16 +31,32 @@ export default function CheckoutAddress({ cart = [], onProceed }) {
   };
 
   return (
-    <main className="space-y-8 py-10">
-      <section className="rounded-[2rem] bg-white p-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)]">
-        <p className="text-sm uppercase tracking-[0.28em] text-sky-600">Checkout</p>
-        <h1 className="mt-3 text-3xl font-semibold text-slate-950">Confirm shipping address</h1>
-        <p className="mt-4 text-sm text-slate-500">Review your delivery address before proceeding to payment.</p>
+    <main className="space-y-8 py-10 px-4 sm:px-6 lg:px-8">
+      <section className="rounded-[2rem] bg-white p-8 shadow-overlay">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm uppercase tracking-[0.28em] text-sky-600">Checkout</p>
+            <h1 className="mt-3 text-3xl font-semibold text-slate-950">Confirm shipping address</h1>
+            <p className="mt-3 text-sm text-slate-500">Review your delivery address before proceeding to payment.</p>
+          </div>
+          <div className="inline-flex items-center gap-3 rounded-full bg-slate-50 px-4 py-3 text-sm text-slate-700 shadow-sm">
+            {checkoutItems.length} item{checkoutItems.length !== 1 ? "s" : ""} selected
+          </div>
+        </div>
       </section>
 
-      <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-        <form className="space-y-6 rounded-[2rem] bg-white p-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)]" onSubmit={handleSubmit}>
+      <section className="grid gap-8 lg:grid-cols-[1.18fr_0.82fr]">
+        <form className="space-y-6 rounded-[2rem] bg-white p-8 shadow-soft" onSubmit={handleSubmit}>
+          <div className="flex items-center gap-3 rounded-full bg-slate-50 px-5 py-4 text-sm text-slate-600 shadow-sm">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 text-white">1</span>
+            <div>
+              <p className="font-semibold text-slate-950">Shipping details</p>
+              <p className="text-sm text-slate-500">Fill in your delivery address to continue.</p>
+            </div>
+          </div>
+
           {error && <div className="rounded-3xl bg-rose-50 p-4 text-sm text-rose-700">{error}</div>}
+
           <div className="grid gap-6 sm:grid-cols-2">
             <label className="block">
               <span className="text-sm font-semibold text-slate-700">Full name</span>
@@ -112,15 +128,15 @@ export default function CheckoutAddress({ cart = [], onProceed }) {
           </div>
         </form>
 
-        <aside className="rounded-[2rem] bg-slate-950 p-8 text-slate-50 shadow-[0_30px_80px_rgba(15,23,42,0.18)]">
+        <aside className="rounded-[2rem] bg-slate-950 p-8 text-slate-50 shadow-overlay">
           <p className="text-sm uppercase tracking-[0.28em] text-sky-400">Order summary</p>
-          <h2 className="mt-4 text-2xl font-semibold">{checkoutItems.length} items</h2>
-          <div className="mt-6 space-y-4">
-            <div className="rounded-[1.75rem] bg-slate-900/70 p-5">
-              <p className="text-sm text-slate-400">Total estimated</p>
-              <p className="mt-3 text-3xl font-semibold text-white">₹ {totalAmount.toFixed(2)}</p>
+          <h2 className="mt-4 text-2xl font-semibold">{checkoutItems.length} item{checkoutItems.length !== 1 ? "s" : ""}</h2>
+          <div className="mt-6 space-y-4 rounded-[1.75rem] bg-slate-900/80 p-6">
+            <div className="flex items-center justify-between text-sm text-slate-300">
+              <span>Estimated total</span>
+              <span>₹ {totalAmount.toFixed(2)}</span>
             </div>
-            <p className="text-sm leading-7 text-slate-300">You can update shipping address and finalize your payment on the next screen.</p>
+            <p className="text-sm leading-7 text-slate-300">You can update your shipping address and finalize payment on the next screen.</p>
           </div>
         </aside>
       </section>

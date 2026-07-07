@@ -6,7 +6,7 @@ export default function Category1() {
 
   return (
     <section className="mx-auto mb-10 max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="rounded-[2rem] bg-slate-950 px-5 py-8 text-slate-100 shadow-[0_30px_80px_rgba(15,23,42,0.18)] sm:p-10">
+      <div className="rounded-[2rem] bg-slate-950 px-5 py-8 text-slate-100 shadow-overlay sm:p-10">
         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.28em] text-sky-400">Shop by category</p>

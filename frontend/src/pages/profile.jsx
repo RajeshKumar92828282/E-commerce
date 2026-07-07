@@ -116,14 +116,15 @@ export default function Profile({ setCart, setWishlist, updateUser }) {
   };
 
   return (
-    <main className="space-y-8 py-10">
-      <section className="rounded-[2rem] bg-white p-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)]">
+    <main className="space-y-8 py-10 px-4 sm:px-6 lg:px-8">
+      <section className="rounded-[2rem] bg-white p-8 shadow-overlay">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.28em] text-sky-600">Profile</p>
-            <h1 className="mt-2 text-3xl font-semibold text-slate-950">Your account</h1>
+            <p className="text-sm uppercase tracking-[0.28em] text-slate-500">Profile</p>
+            <h1 className="mt-3 text-3xl font-semibold text-slate-950">Your account</h1>
+            <p className="mt-2 max-w-2xl text-sm text-slate-600">Manage your personal details, address, and secure account settings.</p>
           </div>
-          <button onClick={handleLogout} className="rounded-full bg-rose-50 px-5 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-100">
+          <button onClick={handleLogout} className="rounded-full border border-slate-200 bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
             Logout
           </button>
         </div>
@@ -132,14 +133,14 @@ export default function Profile({ setCart, setWishlist, updateUser }) {
       {loading ? (
         <section className="rounded-[2rem] bg-white p-12 text-center text-slate-500 shadow-sm">Loading profile...</section>
       ) : (
-        <section className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
-          <aside className="rounded-[2rem] bg-slate-950 p-8 text-slate-50 shadow-[0_25px_70px_rgba(15,23,42,0.18)]">
+        <section className="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
+          <aside className="rounded-[2rem] bg-slate-950 p-8 text-slate-50 shadow-overlay">
             <div className="space-y-4">
               <p className="text-sm uppercase tracking-[0.28em] text-sky-400">Welcome back</p>
               <h2 className="text-2xl font-semibold">{profile.name || "Shopper"}</h2>
-              <p className="text-sm leading-7 text-slate-300">Manage your profile information, updates, and account security from one place.</p>
+              <p className="text-sm leading-7 text-slate-300">Fast access to your profile, orders, wishlist, and saved preferences.</p>
             </div>
-            <div className="mt-8 space-y-4 rounded-[2rem] bg-slate-900/80 p-6">
+            <div className="mt-8 rounded-[2rem] bg-slate-900/80 p-6 space-y-5">
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Email</p>
                 <p className="mt-2 text-sm text-slate-100">{profile.email || "Not set"}</p>
@@ -155,11 +156,11 @@ export default function Profile({ setCart, setWishlist, updateUser }) {
             </div>
           </aside>
 
-          <div className="rounded-[2rem] bg-white p-8 shadow-[0_25px_70px_rgba(15,23,42,0.08)]">
+          <div className="rounded-[2rem] bg-white p-8 shadow-soft">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm uppercase tracking-[0.28em] text-slate-500">Personal information</p>
-                <h2 className="mt-2 text-2xl font-semibold text-slate-950">Update details</h2>
+                <p className="text-sm uppercase tracking-[0.28em] text-slate-500">Personal details</p>
+                <h2 className="mt-2 text-2xl font-semibold text-slate-950">Update profile</h2>
               </div>
               <button onClick={() => setEdit((prev) => !prev)} className="rounded-full bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200">
                 {edit ? "Cancel" : "Edit profile"}

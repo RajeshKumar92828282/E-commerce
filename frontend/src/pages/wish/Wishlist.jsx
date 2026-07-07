@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logger from "../../utils/logger";
-import { FaHeartBroken, FaHeart, FaTrashAlt } from "react-icons/fa";
+import { FaHeart, FaTrashAlt } from "react-icons/fa";
 
 const Wishlist = ({ wishlist: wishlistProp = [], onRemoveItem }) => {
   const [wishlist, setWishlist] = useState(wishlistProp);
@@ -24,7 +24,7 @@ const Wishlist = ({ wishlist: wishlistProp = [], onRemoveItem }) => {
         const token = localStorage.getItem("token");
 
         if (!userId || !token) {
-          setError("Please login first to view wishlist.");
+          setError("Please login first to view your wishlist.");
           setLoading(false);
           return;
         }
@@ -45,8 +45,8 @@ const Wishlist = ({ wishlist: wishlistProp = [], onRemoveItem }) => {
         setWishlist(data);
         setError(null);
       } catch (err) {
-      logger.error("Error fetching wishlist:", err);
-      setError(err.message || "Failed to load wishlist");
+        logger.error("Error fetching wishlist:", err);
+        setError(err.message || "Failed to load wishlist");
       } finally {
         setLoading(false);
       }
@@ -56,9 +56,9 @@ const Wishlist = ({ wishlist: wishlistProp = [], onRemoveItem }) => {
   }, [wishlistProp.length]);
 
   return (
-    <main className="space-y-8 py-10">
-      <section className="rounded-[2rem] bg-white p-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)]">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <main className="space-y-8 py-10 px-4 sm:px-6 lg:px-8">
+      <section className="rounded-[2rem] bg-white p-8 shadow-overlay">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.28em] text-rose-500">Wishlist</p>
             <h1 className="mt-2 text-3xl font-semibold text-slate-950">Saved favorites</h1>
@@ -70,29 +70,29 @@ const Wishlist = ({ wishlist: wishlistProp = [], onRemoveItem }) => {
       </section>
 
       {loading ? (
-        <div className="rounded-[2rem] bg-white p-12 text-center text-slate-500 shadow-sm">Loading wishlist...</div>
+        <section className="rounded-[2rem] bg-white p-12 text-center text-slate-500 shadow-sm">Loading wishlist...</section>
       ) : error ? (
-        <div className="rounded-[2rem] border border-rose-200 bg-rose-50 p-6 text-rose-700 shadow-sm">{error}</div>
+        <section className="rounded-[2rem] border border-rose-200 bg-rose-50 p-6 text-rose-700 shadow-sm">{error}</section>
       ) : wishlist.length === 0 ? (
-        <div className="rounded-[2rem] border border-dashed border-slate-200 bg-slate-50 p-14 text-center text-slate-600 shadow-sm">
-          <p className="text-xl font-semibold">No saved items yet</p>
-          <p className="mt-2 text-sm">Browse products and add favorites to come back to later.</p>
-        </div>
+        <section className="rounded-[2rem] border border-dashed border-slate-200 bg-slate-50 p-14 text-center text-slate-600 shadow-sm">
+          <p className="text-xl font-semibold">Your wishlist is empty</p>
+          <p className="mt-2 text-sm">Save products you love and discover them again later.</p>
+        </section>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {wishlist.map((item) => (
-            <div key={item._id} className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm">
+            <div key={item._id || item.id} className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-5 shadow-soft transition hover:-translate-y-1 hover:shadow-overlay">
               <img src={item.image || "https://via.placeholder.com/320x240?text=No+Image"} alt={item.title} className="h-52 w-full rounded-[1.75rem] object-cover" />
-              <div className="mt-5 space-y-3">
+              <div className="mt-5 space-y-4">
                 <h2 className="text-lg font-semibold text-slate-950 line-clamp-2">{item.title}</h2>
                 <p className="text-sm text-slate-500">₹ {item.price?.toFixed(2)}</p>
-                <div className="flex items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                   <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-600">
                     <FaHeart className="text-rose-500" /> Saved
                   </span>
                   <button
                     type="button"
-                    onClick={() => onRemoveItem?.(item._id)}
+                    onClick={() => onRemoveItem?.(item._id || item.id)}
                     className="inline-flex items-center gap-2 rounded-full bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-600 transition hover:bg-rose-100"
                   >
                     <FaTrashAlt /> Remove

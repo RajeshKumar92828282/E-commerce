@@ -28,18 +28,26 @@ export default function CategoryPage({ products = [], addToCart, addToWishlist, 
   const filtered = normalized === "all" ? products : products.filter((product) => productMatchesSlug(product, normalized));
 
   return (
-    <main className="space-y-8 py-10">
-      <section className="rounded-[2rem] bg-white p-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)]">
-        <p className="text-sm uppercase tracking-[0.28em] text-sky-600">Category</p>
-        <h1 className="mt-3 text-3xl font-semibold text-slate-950">{title}</h1>
-        <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">
-          Explore products curated for the <strong>{title}</strong> collection.
-        </p>
+    <main className="space-y-8 py-10 px-4 sm:px-6 lg:px-8">
+      <section className="rounded-[2rem] bg-gradient-to-r from-slate-950 via-slate-900 to-slate-800 px-8 py-10 text-slate-50 shadow-overlay">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p className="text-sm uppercase tracking-[0.28em] text-sky-300">Category</p>
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight">{title}</h1>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">
+              Discover top-rated products across the {title} category, curated for fast delivery and best value.
+            </p>
+          </div>
+          <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/70 px-5 py-3 text-sm font-semibold text-slate-100 shadow-sm">
+            <span className="rounded-full bg-sky-500 px-3 py-1 text-xs uppercase tracking-[0.24em] text-white">{filtered.length}</span>
+            items available
+          </div>
+        </div>
       </section>
 
       {filtered.length === 0 ? (
-        <section className="rounded-[2rem] bg-white p-12 text-center shadow-sm">
-          <h2 className="text-2xl font-semibold text-slate-950">No products found for &ldquo;{title}&rdquo;.</h2>
+        <section className="rounded-[2rem] bg-white p-12 text-center shadow-soft">
+          <h2 className="text-2xl font-semibold text-slate-950">No products found for “{title}”.</h2>
           <p className="mt-3 text-slate-500">Try browsing another category or return to the home page.</p>
           <Link to="/" className="mt-6 inline-flex rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-500">
             Return to home

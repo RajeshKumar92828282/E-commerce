@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaBars, FaTimes, FaSearch, FaShoppingCart, FaHeart, FaUserCircle } from "react-icons/fa";
+import { LuSearch, LuHeart, LuShoppingCart, LuUser, LuBell, LuMenu, LuX } from "react-icons/lu";
+
+const categories = [
+  { name: "Mobiles", slug: "electronics" },
+  { name: "Fashion", slug: "mens-clothing" },
+  { name: "Beauty", slug: "beauty" },
+  { name: "Home", slug: "home" },
+  { name: "Appliances", slug: "appliances" },
+];
 
 const Navbar = ({ count, wishlistCount, user, onLogout, searchValue = "", onSearchChange = () => {}, onSearchSubmit = () => {} }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,96 +37,111 @@ const Navbar = ({ count, wishlistCount, user, onLogout, searchValue = "", onSear
   };
 
   return (
-    <nav className="bg-slate-950 text-slate-100 shadow-lg shadow-slate-950/10">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2 text-xl font-semibold uppercase tracking-[0.4em] text-white">
-          <span className="text-sky-400">A</span>AIDEN
-        </Link>
+    <nav className="sticky top-0 z-50 bg-slate-950/95 text-slate-100 shadow-2xl shadow-slate-900/10 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3">
+          <Link to="/" className="inline-flex items-center gap-3 rounded-3xl bg-sky-500 px-4 py-3 text-lg font-semibold uppercase tracking-[0.35em] text-white shadow-lg shadow-sky-500/30 transition hover:bg-sky-400">
+            <span>A</span>
+            AIDEN
+          </Link>
+          <div className="hidden sm:flex items-center gap-2 rounded-full bg-slate-900/70 px-3 py-2 text-sm text-slate-300 ring-1 ring-slate-700">
+            <span className="rounded-full bg-slate-800 px-3 py-1">Premium</span>
+            <span>Fast delivery</span>
+          </div>
+        </div>
 
-        <div className="hidden flex-1 lg:block">
-          <form onSubmit={handleSearchSubmit} className="relative max-w-2xl">
+        <div className="hidden flex-1 items-center justify-center lg:flex">
+          <form onSubmit={handleSearchSubmit} className="relative w-full max-w-2xl">
+            <LuSearch className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search for shoes, bags, gadgets..."
+              placeholder="Search for products, brands and more"
               value={searchValue}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full rounded-full border border-slate-700 bg-slate-900/90 px-4 py-3 pr-14 text-sm text-slate-100 outline-none transition focus:border-sky-500"
+              className="w-full rounded-full border border-slate-800 bg-slate-900/90 py-3 pl-12 pr-4 text-sm text-slate-100 shadow-lg shadow-slate-900/20 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-500/20"
             />
-            <button type="submit" className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full bg-sky-500 px-4 py-3 text-slate-950 transition hover:bg-sky-400">
-              <FaSearch />
-            </button>
           </form>
         </div>
 
-        <div className="hidden items-center gap-4 lg:flex">
-          <Link to="/about" className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/90 px-4 py-2 text-sm text-slate-100 transition hover:bg-slate-800">
-            About
+        <div className="hidden items-center gap-2 lg:flex">
+          <Link to="/wishlist" className="relative inline-flex h-11 w-11 items-center justify-center rounded-full bg-slate-900 text-slate-100 transition hover:bg-slate-800">
+            <LuHeart className="h-5 w-5" />
+            <span className="absolute -right-1 top-0 inline-flex h-5 min-w-[1.2rem] items-center justify-center rounded-full bg-rose-500 px-1.5 text-[10px] font-semibold text-white">{wishlistCount}</span>
           </Link>
-          <Link to="/cart" className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/90 px-4 py-2 text-sm text-slate-100 transition hover:bg-slate-800">
-            <FaShoppingCart /> Cart
-            <span className="rounded-full bg-sky-500 px-2 py-0.5 text-xs font-semibold text-slate-950">{count}</span>
+          <Link to="/cart" className="relative inline-flex h-11 w-11 items-center justify-center rounded-full bg-slate-900 text-slate-100 transition hover:bg-slate-800">
+            <LuShoppingCart className="h-5 w-5" />
+            <span className="absolute -right-1 top-0 inline-flex h-5 min-w-[1.2rem] items-center justify-center rounded-full bg-sky-500 px-1.5 text-[10px] font-semibold text-white">{count}</span>
           </Link>
-          <Link to="/wishlist" className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/90 px-4 py-2 text-sm text-slate-100 transition hover:bg-slate-800">
-            <FaHeart /> Wishlist
-            <span className="rounded-full bg-rose-500 px-2 py-0.5 text-xs font-semibold text-slate-950">{wishlistCount}</span>
-          </Link>
+          <button type="button" className="inline-flex h-11 items-center justify-center rounded-full bg-slate-900 px-4 text-sm text-slate-100 transition hover:bg-slate-800">
+            <LuBell className="h-5 w-5" />
+          </button>
           {user && user.name ? (
-            <div className="flex items-center gap-3 rounded-full border border-slate-700 bg-slate-900/90 px-4 py-2 text-sm text-slate-100">
-              <FaUserCircle className="text-sky-400" />
+            <div className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-4 py-3 text-sm text-slate-100 shadow-sm shadow-slate-900/40">
+              <LuUser className="h-5 w-5 text-sky-400" />
               <span>Hello, {user.name.split(" ")[0]}</span>
-              <button onClick={handleLogout} className="rounded-full bg-white px-3 py-2 text-slate-950 transition hover:bg-slate-100">
+              <button onClick={handleLogout} className="rounded-full bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-white">
                 Logout
               </button>
             </div>
           ) : (
-            <Link to="/login" className="rounded-full bg-sky-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-sky-400">
+            <Link to="/login" className="inline-flex h-11 items-center justify-center rounded-full bg-slate-100 px-5 text-sm font-semibold text-slate-950 transition hover:bg-white">
               Login
             </Link>
           )}
         </div>
 
-        <button type="button" onClick={() => setMenuOpen(!menuOpen)} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-700 bg-slate-900 text-slate-100 lg:hidden">
-          {menuOpen ? <FaTimes /> : <FaBars />}
+        <button type="button" onClick={() => setMenuOpen(!menuOpen)} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-800 bg-slate-900 text-slate-100 transition hover:bg-slate-800 lg:hidden">
+          {menuOpen ? <LuX className="h-5 w-5" /> : <LuMenu className="h-5 w-5" />}
         </button>
       </div>
 
       <div className={`${menuOpen ? "block" : "hidden"} border-t border-slate-800 bg-slate-950/95 lg:hidden`}>
         <div className="space-y-4 px-4 py-5">
           <form onSubmit={handleSearchSubmit} className="relative">
+            <LuSearch className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search products..."
+              placeholder="Search products"
               value={searchValue}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full rounded-full border border-slate-700 bg-slate-900/90 px-4 py-3 pr-14 text-sm text-slate-100 outline-none"
+              className="w-full rounded-full border border-slate-800 bg-slate-900 py-3 pl-12 pr-4 text-sm text-slate-100 outline-none"
             />
-            <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-sky-500 px-3 py-2 text-slate-950">
-              <FaSearch />
-            </button>
           </form>
 
           <div className="grid gap-3">
-            <Link to="/cart" onClick={() => setMenuOpen(false)} className="inline-flex items-center justify-between rounded-2xl border border-slate-700 bg-slate-900/90 px-4 py-3 text-sm text-slate-100">
-              <span>Cart</span>
-              <span className="rounded-full bg-sky-500 px-2 py-0.5 text-xs font-semibold text-slate-950">{count}</span>
+            <Link to="/category/all" onClick={() => setMenuOpen(false)} className="rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800">
+              All Categories
             </Link>
-            <Link to="/wishlist" onClick={() => setMenuOpen(false)} className="inline-flex items-center justify-between rounded-2xl border border-slate-700 bg-slate-900/90 px-4 py-3 text-sm text-slate-100">
-              <span>Wishlist</span>
-              <span className="rounded-full bg-rose-500 px-2 py-0.5 text-xs font-semibold text-slate-950">{wishlistCount}</span>
+            <Link to="/cart" onClick={() => setMenuOpen(false)} className="rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800">
+              Cart ({count})
             </Link>
-            <Link to="/profile" onClick={() => setMenuOpen(false)} className="inline-flex items-center gap-2 rounded-2xl border border-slate-700 bg-slate-900/90 px-4 py-3 text-sm text-slate-100">
-              <FaUserCircle /> Profile
+            <Link to="/wishlist" onClick={() => setMenuOpen(false)} className="rounded-3xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800">
+              Wishlist ({wishlistCount})
             </Link>
             {user && user.name ? (
-              <button onClick={handleLogout} className="rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-950">
+              <button onClick={handleLogout} className="rounded-3xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-white">
                 Logout
               </button>
             ) : (
-              <Link to="/login" onClick={() => setMenuOpen(false)} className="rounded-2xl bg-sky-500 px-4 py-3 text-sm font-semibold text-slate-950">
+              <Link to="/login" onClick={() => setMenuOpen(false)} className="rounded-3xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-white">
                 Login
               </Link>
             )}
           </div>
+        </div>
+      </div>
+
+      <div className="hidden border-t border-slate-800/60 bg-slate-950/95 py-2 lg:flex">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-4 sm:px-6 lg:px-8">
+          {categories.map((category) => (
+            <Link
+              key={category.slug}
+              to={`/category/${category.slug}`}
+              className="rounded-full border border-slate-800 bg-slate-900 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-slate-700 hover:bg-slate-800"
+            >
+              {category.name}
+            </Link>
+          ))}
         </div>
       </div>
     </nav>

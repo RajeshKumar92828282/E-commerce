@@ -218,15 +218,23 @@ const App = () => {
   };
 
   const addToCart = async (product) => {
-    if (!user.id) return;
+    if (!user.id) {
+      navigate("/login");
+      return;
+    }
 
     const token = localStorage.getItem("token");
     if (!token) {
       logger.warn("No token available for addToCart");
+      navigate("/login");
       return;
     }
 
-    const productId = product._id || product.id;
+    const productId = product._id ?? product.id ?? product?.productId;
+    if (!productId) {
+      logger.warn("Unable to add unknown product to cart", product);
+      return null;
+    }
 
     try {
       const res = await fetch("http://localhost:5000/api/cart/add", {
@@ -279,15 +287,23 @@ const App = () => {
   };
 
   const addToWishlist = async (product) => {
-    if (!user.id) return;
+    if (!user.id) {
+      navigate("/login");
+      return;
+    }
 
     const token = localStorage.getItem("token");
     if (!token) {
       logger.warn("No token available for addToWishlist");
+      navigate("/login");
       return;
     }
 
-    const productId = product._id || product.id;
+    const productId = product._id ?? product.id ?? product?.productId;
+    if (!productId) {
+      logger.warn("Unable to add unknown product to wishlist", product);
+      return;
+    }
 
     try {
       const res = await fetch("http://localhost:5000/api/wishlist/add", {
@@ -383,6 +399,7 @@ const App = () => {
 
         <Route path="/login" element={<Login onLoginSuccess={onLoginSuccess} />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/about" element={<About />} />
 
         <Route
           path="/search"

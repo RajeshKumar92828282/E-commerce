@@ -12,12 +12,19 @@ export default function Category({ filterItems, categories = [] }) {
         { name: "Beauty", slug: "beauty" },
       ];
 
+  const handleCategoryClick = (slug) => {
+    if (filterItems) {
+      filterItems(slug.replace(/-/g, " "));
+    }
+    navigate(`/category/${slug}`);
+  };
+
   return (
-    <div className="rounded-[2rem] bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
+    <div className="rounded-[2rem] bg-white p-6 shadow-overlay">
       <div className="flex flex-wrap gap-3">
         <button
           type="button"
-          onClick={() => navigate("/category/all")}
+          onClick={() => handleCategoryClick("all")}
           className="rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
         >
           All
@@ -28,7 +35,7 @@ export default function Category({ filterItems, categories = [] }) {
             <button
               key={slug}
               type="button"
-              onClick={() => navigate(`/category/${slug}`)}
+              onClick={() => handleCategoryClick(slug)}
               className="rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
             >
               {category.name}

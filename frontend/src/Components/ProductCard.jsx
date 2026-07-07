@@ -1,90 +1,89 @@
 import React from "react";
-import { FaHeart, FaShoppingCart, FaStar } from "react-icons/fa";
+import { FaHeart, FaShoppingCart, FaStar, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({ product, addToCart, addToWishlist, isWished }) {
   const navigate = useNavigate();
-  const productId = product._id || product.id;
-  const image = product.image || product.images?.[0] || "https://via.placeholder.com/320x240?text=No+Image";
-  const discount = product.oldPrice ? Math.round(100 - (product.price / product.oldPrice) * 100) : 0;
+  const productId = product._id ?? product.id ?? product?.productId ?? product?.productId;
+  const image = product.image || product.images?.[0] || "https://via.placeholder.com/360x360?text=No+Image";
+  const discount = product.oldPrice ? Math.max(5, Math.round(100 - (product.price / product.oldPrice) * 100)) : 0;
+  const ratingValue = product.rating?.average?.toFixed(1) || "4.4";
+
+  const handleView = () => {
+    if (!productId) return;
+    navigate(`/product/${productId}`);
+  };
+
+  const handleAddToCart = () => {
+    if (!addToCart) return;
+    addToCart(product);
+  };
 
   return (
-    <div className="group relative overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_50px_rgba(15,23,42,0.08)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_rgba(15,23,42,0.12)]">
-      <div className="relative overflow-hidden bg-slate-100">
-        <img
-          src={image}
-          alt={product.title}
-          className="h-72 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+    <article className="group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-overlay">
+      <div className="relative overflow-hidden">
+        <button type="button" onClick={handleView} className="block w-full">
+          <img src={image} alt={product.title} className="h-44 w-full object-cover transition duration-300 group-hover:scale-105" />
+        </button>
+
         {discount > 0 && (
-          <span className="absolute left-4 top-4 rounded-full bg-amber-500 px-3 py-1 text-xs font-semibold text-slate-950 shadow-lg shadow-amber-500/20">
-            {discount}% OFF
+          <span className="absolute left-3 top-3 rounded-full bg-emerald-600 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-white shadow-sm">
+            -{discount}%
           </span>
         )}
+
+        <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-slate-950/90 px-3 py-1 text-[11px] font-semibold text-white">
+          <FaStar className="h-3 w-3 text-amber-400" /> {ratingValue}
+        </span>
+
         <button
           type="button"
           onClick={() => addToWishlist && addToWishlist(product)}
-          className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/85 text-slate-900 shadow-lg shadow-slate-900/5 transition hover:scale-105 hover:bg-white"
+          className="absolute right-3 bottom-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-900 shadow-sm transition hover:bg-slate-100"
+          aria-label="Add to wishlist"
         >
-          <FaHeart className={`${isWished ? "text-rose-500" : "text-slate-500"}`} />
+          <FaHeart className={isWished ? "text-rose-500" : "text-slate-400"} />
         </button>
       </div>
 
-      <div className="space-y-4 p-6">
-        <div className="flex items-center justify-between text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          <span>{product.category}</span>
-          <span>{product.stock > 0 ? "In stock" : "Out of stock"}</span>
+      <div className="space-y-3 p-4">
+        <button type="button" onClick={handleView} className="w-full text-left text-sm font-semibold text-slate-950 line-clamp-2 transition hover:text-sky-600">
+          {product.title}
+        </button>
+
+        <p className="text-xs leading-5 text-slate-500 line-clamp-2">{product.description || product.category || "Premium product"}</p>
+
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+          <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 text-slate-700">Free delivery</span>
+          <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 text-slate-700">{product.category || "General"}</span>
         </div>
 
-        <div className="space-y-2">
-          <h3 className="text-xl font-semibold text-slate-950 line-clamp-2" onClick={() => navigate(`/product/${productId}`)}>
-            {product.title}
-          </h3>
-          <p className="text-sm leading-6 text-slate-500 line-clamp-2">{product.description}</p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1 text-amber-500">
-            <FaStar />
-            <span className="text-sm font-semibold">{product.rating?.average?.toFixed(1) || "4.3"}</span>
-          </div>
-          <span className="text-sm text-slate-400">({product.rating?.count || 86})</span>
-        </div>
-
-        <div className="flex items-center gap-3">
+        <div className="flex items-end justify-between gap-3">
           <div>
-            <p className="text-2xl font-semibold text-slate-950">₹ {product.price.toFixed(2)}</p>
-            {product.oldPrice && <p className="text-sm text-slate-400 line-through">₹ {product.oldPrice.toFixed(2)}</p>}
+            <p className="text-xl font-semibold text-slate-950">₹ {product.price.toFixed(2)}</p>
+            {product.oldPrice && <p className="text-xs text-slate-400 line-through">₹ {product.oldPrice.toFixed(2)}</p>}
           </div>
+          <span className="rounded-full bg-sky-50 px-3 py-1 text-[11px] font-semibold text-sky-700">Top rated</span>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
           <button
             type="button"
-            onClick={() => navigate(`/product/${productId}`)}
-            className="rounded-2xl border border-slate-200 bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+            onClick={handleAddToCart}
+            className="inline-flex items-center justify-center gap-2 rounded-[1.5rem] bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
           >
-            View details
+            <FaShoppingCart className="h-4 w-4" /> Add
           </button>
           <button
             type="button"
-            onClick={() => addToCart && addToCart(product)}
-            className="rounded-2xl bg-sky-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-sky-500"
+            onClick={handleView}
+            disabled={!productId}
+            className={`inline-flex items-center justify-center gap-2 rounded-[1.5rem] border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-slate-50 ${!productId ? "cursor-not-allowed opacity-60" : ""}`}
           >
-            <FaShoppingCart className="mr-2 inline-block" /> Add to cart
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              localStorage.setItem("buyNow", JSON.stringify(product));
-              navigate("/checkout/address");
-            }}
-            className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-50"
-          >
-            Buy now
+            View <FaChevronRight className="h-3 w-3" />
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
