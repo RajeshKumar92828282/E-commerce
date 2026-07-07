@@ -14,7 +14,11 @@ app.use("/upload", express.static("upload"));
 // MongoDB Connection
 mongoose
   .connect("mongodb://127.0.0.1:27017/ecommerce")
-  .then(() => console.log("✓ MongoDB connected successfully"))
+  .then(async () => {
+    console.log("✓ MongoDB connected successfully");
+    const seedInitialData = require("./seed");
+    await seedInitialData();
+  })
   .catch((err) => {
     console.error("✗ MongoDB connection error:", err.message);
     process.exit(1);
@@ -25,7 +29,8 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/user"));
 app.use("/api/cart", require("./routes/cartroutes"));
 app.use("/api/wishlist", require("./routes/wishlist"));
-
+app.use("/api/products", require("./routes/product"));
+app.use("/api/orders", require("./routes/orders"));
 
 
 // Health check endpoint

@@ -1,0 +1,89 @@
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Allproduct from "../Components/allproduct/Allproduct";
+import { fetchProducts } from "../services/api";
+
+export default function SearchResults({ addToCart, addToWishlist, wishlist = [] }) {
+  const location = useLocation();
+  const query = new URLSearchParams(location.search).get("q") || "";
+  const trimmed = query.trim();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (!trimmed) {
+        setProducts([]);
+        setError(null);
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const payload = await fetchProducts({ search: trimmed, limit: 100 });
+        const items = Array.isArray(payload.products) ? payload.products : [];
+        setProducts(items);
+      } catch (err) {
+        setError(err.message || "Unable to load search results.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResults();
+  }, [trimmed]);
+
+  const matching = products;
+
+  return (
+    <main className="space-y-8 py-10">
+      <section className="rounded-[2rem] bg-white p-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)]">
+        <p className="text-sm uppercase tracking-[0.28em] text-sky-600">Search results</p>
+        <h1 className="mt-3 text-3xl font-semibold text-slate-950">Find the perfect product</h1>
+        <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">
+          {trimmed ? (
+            <span>
+              Showing results for <strong>"{trimmed}"</strong>. {matching.length} product{matching.length === 1 ? "" : "s"} found.
+            </span>
+          ) : (
+            "Enter a product name or brand in the search box to get started."
+          )}
+        </p>
+      </section>
+
+      {error && (
+        <section className="rounded-[2rem] border border-rose-200 bg-rose-50 p-6 text-rose-700 shadow-sm">
+          <p>{error}</p>
+        </section>
+      )}
+
+      {loading ? (
+        <section className="rounded-[2rem] bg-white p-12 text-center text-slate-500 shadow-sm">Loading search results...</section>
+      ) : trimmed ? (
+        matching.length > 0 ? (
+          <Allproduct items={matching} addToCart={addToCart} addToWishlist={addToWishlist} wishlist={wishlist} />
+        ) : (
+          <section className="rounded-[2rem] bg-white p-12 text-center shadow-sm">
+            <h2 className="text-2xl font-semibold text-slate-950">No products matched your search.</h2>
+            <p className="mt-3 text-slate-500">Try a different keyword or browse popular categories.</p>
+            <Link to="/" className="mt-6 inline-flex rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-500">
+              Return to home
+            </Link>
+          </section>
+        )
+      ) : (
+        <section className="rounded-[2rem] bg-white p-12 text-center shadow-sm">
+          <h2 className="text-2xl font-semibold text-slate-950">No search query entered yet.</h2>
+          <p className="mt-3 text-slate-500">Use the search input in the navbar to discover products.</p>
+          <Link to="/" className="mt-6 inline-flex rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-500">
+            Browse all products
+          </Link>
+        </section>
+      )}
+    </main>
+  );
+}

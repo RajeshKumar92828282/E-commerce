@@ -9,13 +9,13 @@ import beauty from "../../assets/imgicon/beauty.webp";
 import ele from "../../assets/imgicon/ele.webp";
 
 const category=[
-    {name: "fashion",image: fashion,path:'/mens'},
-    {name: "mobile",image: mobiles,path: '/mobiles'},
-    {name: "travel",image: travel,path: '/travel'},
-    {name: "kitchen",image: kitchen,path: '/kitchen'},
-    {name: "appliances",image: appliances,path: '/appliances'},
-    {name: "beauty",image: beauty,path: '/beauty'},
-    {name: "electronic",image: ele,path: '/electronic'},
+    {name: "Men's Clothing",image: fashion,slug:'mens-clothing',path:'/category/mens-clothing'},
+    {name: "Mobile",image: mobiles,slug:'mobiles',path:'/category/mobiles'},
+    {name: "Travel",image: travel,slug:'travel',path:'/category/travel'},
+    {name: "Kitchen",image: kitchen,slug:'kitchen',path:'/category/kitchen'},
+    {name: "Appliances",image: appliances,slug:'appliances',path:'/category/appliances'},
+    {name: "Beauty",image: beauty,slug:'beauty',path:'/category/beauty'},
+    {name: "Electronics",image: ele,slug:'electronics',path:'/category/electronics'},
 
 ];
 
